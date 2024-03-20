@@ -37,20 +37,21 @@ const getBook = async (req, res, next) => { // Recibe una request, una response 
 // Obtener todos los libros. Pero debemos aplicar un "middleware" para comprobar que el libro esta disponible o no. [GET ALL]
 router.get('/', async (req, res) => {
         try {
-                const books = await Book.find()
-                console.log('GET ALL', books)
 
+                const books = await Book.find();
+                console.log('GET ALL', books)
                 if (books.length === 0) {
                         return res.status(204).json([])
                 }
 
                 res.json(books)
-
+                
         } catch (error) {
-
                 res.status(500).json({ message: error.message })
         }
 })
+
+
 
 // Crear un nuevo libro (estamos creando un RECURSO) [POST]
 router.post('/', async (req, res) => {
@@ -117,7 +118,7 @@ router.put('/:id', getBook, async (req, res) => {
 // Creamos el "patch" para modificar un recurso parcial de algun recurso general [PATCH]
 router.patch('/:id', getBook, async (req, res) => {
 
-        if(!req.body.title && !req.body.author && !req.body.genre && !req.body.publication_date){
+        if (!req.body.title && !req.body.author && !req.body.genre && !req.body.publication_date) {
                 res.status(400).json({
                         message: 'Algunos de los campos: titulo, autor, genero y fecha de publicación, deben ser enviados'
                 })
